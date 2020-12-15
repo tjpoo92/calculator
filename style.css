@@ -1,0 +1,5 @@
+div.display {
+  border: 1px inset black;
+  border-radius: 0;
+  width: min-content;
+}
