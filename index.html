@@ -9,66 +9,138 @@
       integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
       crossorigin="anonymous"
     />
+
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+      integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+      crossorigin="anonymous"
+    />
+
     <link rel="stylesheet" href="reset.css" />
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="#" />
   </head>
 
-  <header>This is my calculator header</header>
+  <header class="jumbotron jumobtron-fluid">
+    <div class="container">
+      <h1 class="text-center">This is my calculator header</h1>
+    </div>
+  </header>
   <body>
-    <div class="container-fluid">
+    <div class="container-fluid body">
       <div class="row justify-content-center">
-        <div class="col">
-          <div class="display">Display</div>
-          <div class="row justify-content-center">
-            <div class="col-xs-4">
-              <button class="btn btn-default">1</button>
-            </div>
-            <div class="col-xs-4">
-              <button class="btn btn-default">2</button>
-            </div>
-            <div class="col-xs-4">
-              <button class="btn btn-default">3</button>
-            </div>
-          </div>
-          <div class="row justify-content-center">
-            <div class="col-xs-4">
-              <button class="btn btn-default">4</button>
-            </div>
-            <div class="col-xs-4">
-              <button class="btn btn-default">5</button>
-            </div>
-            <div class="col-xs-4">
-              <button class="btn btn-default">6</button>
-            </div>
-          </div>
-          <div class="row justify-content-center">
-            <div class="col-xs-4">
-              <button class="btn btn-default">7</button>
-            </div>
-            <div class="col-xs-4">
-              <button class="btn btn-default">8</button>
-            </div>
-            <div class="col-xs-4">
-              <button class="btn btn-default">9</button>
-            </div>
-          </div>
-          <div class="row justify-content-center">
-            <div class="col-xs-4">
-              <button class="btn btn-default">0</button>
-            </div>
-            <div class="col-xs-4">
-              <button class="btn btn-default">=</button>
-            </div>
-            <div class="col-xs-4">
-              <button class="btn btn-default">CE</button>
-            </div>
-          </div>
+        <div class="col-xs-12">
+          <div class="display" style="width: 15rem; height: 3rem">History</div>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-xs-8">
+          <div class="display" style="width: 9rem">Display</div>
+        </div>
+        <div class="col-xs-2">
+          <button class="btn btn-secondary">
+            <i class="fas fa-backspace"></i>
+          </button>
+        </div>
+        <div class="col-xs-2">
+          <button class="btn btn-danger">CE</button>
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-xs-2">
+          <button class="btn btn-secondary">7</button>
+        </div>
+        <div class="col-xs-2">
+          <button class="btn btn-secondary">8</button>
+        </div>
+        <div class="col-xs-2">
+          <button class="btn btn-secondary">9</button>
+        </div>
+        <div class="col-xs-2">
+          <button class="btn btn-dark">
+            <i class="fas fa-divide"></i>
+          </button>
+        </div>
+        <div class="col-xs-2">
+          <button class="btn btn-secondary">
+            <i class="fas fa-percentage"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-xs-2">
+          <button class="btn btn-secondary">4</button>
+        </div>
+        <div class="col-xs-2">
+          <button class="btn btn-secondary">5</button>
+        </div>
+        <div class="col-xs-2">
+          <button class="btn btn-secondary">6</button>
+        </div>
+        <div class="col-xs-2">
+          <button class="btn btn-dark">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="col-xs-2">
+          <button class="btn btn-secondary">
+            <i class="fas fa-superscript"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-xs-2">
+          <button class="btn btn-secondary">1</button>
+        </div>
+        <div class="col-xs-2">
+          <button class="btn btn-secondary">2</button>
+        </div>
+        <div class="col-xs-2">
+          <button class="btn btn-secondary">3</button>
+        </div>
+        <div class="col-xs-2">
+          <button class="btn btn-dark">
+            <i class="fas fa-minus"></i>
+          </button>
+        </div>
+        <div class="col-xs-2">
+          <button class="btn btn-secondary">
+            <i class="fas fa-square-root-alt"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-xs-2">
+          <button class="btn btn-secondary">.</button>
+        </div>
+        <div class="col-xs-2">
+          <button class="btn btn-secondary">0</button>
+        </div>
+        <div class="col-xs-2">
+          <button class="btn btn-secondary">+/-</button>
+        </div>
+        <div class="col-xs-2">
+          <button class="btn btn-dark"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="col-xs-2">
+          <button class="btn btn-success"><i class="fas fa-equals"></i></button>
         </div>
       </div>
     </div>
   </body>
-  <footer>This is my calculator footer</footer>
+  <footer class="fixed-bottom text-center">
+    This project was completed as part of
+    <a href="https://www.theodinproject.com/" target="_blank"
+      >The Odin Project</a
+    >
+    you can see more of my work on
+    <a href="https://github.com/tjpoo92/" target="_blank">GitHub</a>
+  </footer>
 
   <script src="index.js"></script>
 </html>
