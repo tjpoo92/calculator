@@ -1,11 +1,12 @@
 Need to do:
-1. Build responsive GUI
+1 (DONE). Build responsive GUI
 2. Display numbers and result
 3. Rounding
-4. Clear button
+4 (DONE). Clear button
 
 EC:
 1. Floating point operations
 2. Pretty
 3. Backspace
 4. Keyboard support
+
