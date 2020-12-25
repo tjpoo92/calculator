@@ -35,7 +35,6 @@ numregex = /\d/
 const history = document.querySelector("#history");
 const display = document.querySelector("#display");
 const buttons = document.querySelectorAll("button");
-let operation = [];
 let string = "";
 for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener("click", (e) => {
@@ -47,4 +46,42 @@ for (let i = 0; i < buttons.length; i++) {
         };
         display.innerText = string;
     });
+}
+
+function specialCharacters(e) {
+    switch (e.target.id) {
+        case "decimal":
+            decimal();
+            break;
+        case "plusminus":
+            plusminus();
+            break;
+        case "plus":
+        case "minus":
+        case "times":
+        case "divide":
+            operate();
+            break;
+        case "equals":
+            equals();
+            break;
+        case "sqrt":
+            sqrt();
+            break;
+        case "pow":
+            pow();
+            break;
+        case "modulo":
+            modulo();
+            break;
+        case "backspace":
+            backspace();
+            break;
+        case "clear":
+            clear();
+            break;
+        default:
+            console.error("Error within specialCharacters")
+            break;
+    }
 }
