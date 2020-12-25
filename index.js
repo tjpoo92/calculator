@@ -31,7 +31,7 @@ function operate(operator, num1, num2) {
             return divide(num1, num2);
     }
 }
-numregex = /\d|[\.]/
+numregex = /\d/
 const history = document.querySelector("#history");
 const display = document.querySelector("#display");
 const buttons = document.querySelectorAll("button");
@@ -39,11 +39,12 @@ let operation = [];
 let string = "";
 for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener("click", (e) => {
-        if (e.target.value.match(numregex)) {
-            string += e.target.value;
+        if (e.target.id.match(numregex)) {
+            string += e.target.id;
+        }
+        else {
+            specialCharacters(e);
         };
         display.innerText = string;
     });
 }
-
-//testing
