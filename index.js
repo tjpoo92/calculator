@@ -35,16 +35,22 @@ numregex = /\d/
 const history = document.querySelector("#history");
 const display = document.querySelector("#display");
 const buttons = document.querySelectorAll("button");
+const operators = document.querySelectorAll(".operator")
 let string = "";
 for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener("click", (e) => {
         if (e.target.id.match(numregex)) {
             string += e.target.id;
+            display.innerText = string;
+            for (let i = 0; i < operators.length; i++) {
+                operators[i].removeAttribute("disabled");
+
+            }
         }
         else {
             specialCharacters(e);
         };
-        display.innerText = string;
+
     });
 }
 
@@ -60,19 +66,13 @@ function specialCharacters(e) {
         case "minus":
         case "times":
         case "divide":
-            operate();
+        case "sqrt":
+        case "pow":
+        case "modulo":
+            commitOperators(e);
             break;
         case "equals":
             equals();
-            break;
-        case "sqrt":
-            sqrt();
-            break;
-        case "pow":
-            pow();
-            break;
-        case "modulo":
-            modulo();
             break;
         case "backspace":
             backspace();
@@ -83,5 +83,31 @@ function specialCharacters(e) {
         default:
             console.error("Error within specialCharacters")
             break;
+    }
+}
+
+function commitOperators(e) {
+    if (e.target.value == "sqrt") {
+        string = `${e.target.value} (${string})`
+    }
+    else {
+        string += e.target.value;
+    }
+    history.innerText = string;
+    string = "";
+    display.innerText = string;
+    for (let i = 0; i < operators.length; i++) {
+        operators[i].setAttribute("disabled", true);
+
+    }
+}
+
+function clear() {
+    string = "";
+    display.innerText = string;
+    history.innerText = string;
+    for (let i = 0; i < operators.length; i++) {
+        operators[i].removeAttribute("disabled");
+
     }
 }

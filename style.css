@@ -25,6 +25,10 @@ footer {
   margin: 1rem;
 }
 
+body {
+  background-color: lightgrey;
+}
+
 button {
   height: 3rem;
   border-radius: 0 !important;
