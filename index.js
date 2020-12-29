@@ -37,6 +37,8 @@ const display = document.querySelector("#display");
 const buttons = document.querySelectorAll("button");
 const operators = document.querySelectorAll(".operator")
 let string = "";
+let operation = []
+
 for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener("click", (e) => {
         if (e.target.id.match(numregex)) {
@@ -48,6 +50,8 @@ for (let i = 0; i < buttons.length; i++) {
             }
         }
         else {
+            operation.push(string);
+
             specialCharacters(e);
         };
 
@@ -55,6 +59,7 @@ for (let i = 0; i < buttons.length; i++) {
 }
 
 function specialCharacters(e) {
+
     switch (e.target.id) {
         case "decimal":
             decimal();
@@ -69,6 +74,7 @@ function specialCharacters(e) {
         case "sqrt":
         case "pow":
         case "modulo":
+            operation.push(e.target.id);
             commitOperators(e);
             break;
         case "equals":
@@ -89,9 +95,10 @@ function specialCharacters(e) {
 function commitOperators(e) {
     if (e.target.value == "sqrt") {
         string = `${e.target.value} (${string})`
+        compute();
     }
     else {
-        string += e.target.value;
+        string += ` ${e.target.value} `;
     }
     history.innerText = string;
     string = "";
@@ -102,10 +109,18 @@ function commitOperators(e) {
     }
 }
 
+function equals() {
+    if (!(operation[operation.length - 1].match(numregex))) {
+        console.error("Please complete your operation")
+    }
+    else computer();
+}
+
 function clear() {
     string = "";
     display.innerText = string;
     history.innerText = string;
+    operation = [];
     for (let i = 0; i < operators.length; i++) {
         operators[i].removeAttribute("disabled");
 
