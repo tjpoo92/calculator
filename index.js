@@ -1,19 +1,19 @@
 function add(num1, num2) {
-    return num1 + num2;
+    return console.log(num1 + num2);
 }
 
 function subtract(num1, num2) {
-    return num1 - num2;
+    return console.log(num1 - num2);
 }
 
 function multiply(num1, num2) {
-    return num1 * num2;
+    return console.log(num1 * num2);
 }
 
 function divide(num1, num2) {
     if (num2 == 0) {
-        return "ERROR, CANNOT DIVIDE BY ZERO";
-    } else return num1 / num2;
+        return console.error("ERROR, CANNOT DIVIDE BY ZERO");
+    } else return console.log(num1 / num2);
 }
 
 function operate(operator, num1, num2) {
@@ -37,21 +37,17 @@ const display = document.querySelector("#display");
 const buttons = document.querySelectorAll("button");
 const operators = document.querySelectorAll(".operator")
 let string = "";
-let operation = []
+let operation = [];
 
 for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener("click", (e) => {
         if (e.target.id.match(numregex)) {
             string += e.target.id;
             display.innerText = string;
-            for (let i = 0; i < operators.length; i++) {
-                operators[i].removeAttribute("disabled");
-
-            }
+            enableOperatorButtons();
         }
         else {
             operation.push(string);
-
             specialCharacters(e);
         };
 
@@ -74,7 +70,7 @@ function specialCharacters(e) {
         case "sqrt":
         case "pow":
         case "modulo":
-            operation.push(e.target.id);
+            operation.push(e.target.value);
             commitOperators(e);
             break;
         case "equals":
@@ -97,23 +93,28 @@ function commitOperators(e) {
         string = `${e.target.value} (${string})`
         compute();
     }
+    else if (e.target.value == "divide") {
+        document.querySelector(".zero").setAttribute("disable", true);
+        //TODO some popup
+        string += ` ${e.target.value} `;
+    }
     else {
         string += ` ${e.target.value} `;
     }
     history.innerText = string;
     string = "";
     display.innerText = string;
-    for (let i = 0; i < operators.length; i++) {
-        operators[i].setAttribute("disabled", true);
-
-    }
+    disableOperatorButtons();
 }
 
 function equals() {
     if (!(operation[operation.length - 1].match(numregex))) {
         console.error("Please complete your operation")
+        // TODO popup
     }
-    else computer();
+    else {
+        compute()
+    };
 }
 
 function clear() {
@@ -121,8 +122,25 @@ function clear() {
     display.innerText = string;
     history.innerText = string;
     operation = [];
+    enableOperatorButtons();
+}
+
+function disableOperatorButtons() {
+    for (let i = 0; i < operators.length; i++) {
+        operators[i].setAttribute("disabled", true);
+    }
+}
+
+function enableOperatorButtons() {
     for (let i = 0; i < operators.length; i++) {
         operators[i].removeAttribute("disabled");
-
     }
+}
+
+function compute() {
+    console.table(operation);
+    num1 = parseInt(operation[0]);
+    operator = operation[1];
+    num2 = parseInt(operation[2]);
+    operate(operator, num1, num2);
 }
