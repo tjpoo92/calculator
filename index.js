@@ -1,5 +1,9 @@
 function add(num1, num2) {
-    return console.log(num1 + num2);
+    answer = num1 + num2;
+    display.innerText = answer;
+    operation = [];
+    string = parseInt(answer);
+    answer = "";
 }
 
 function subtract(num1, num2) {
@@ -38,6 +42,7 @@ const buttons = document.querySelectorAll("button");
 const operators = document.querySelectorAll(".operator")
 let string = "";
 let operation = [];
+let answer;
 
 for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener("click", (e) => {
@@ -102,18 +107,18 @@ function commitOperators(e) {
         string += ` ${e.target.value} `;
     }
     history.innerText = string;
-    string = "";
-    display.innerText = string;
+    display.innerText = "";
     disableOperatorButtons();
 }
 
 function equals() {
     if (!(operation[operation.length - 1].match(numregex))) {
-        console.error("Please complete your operation")
+        display.innerText = "Please complete your operation";
         // TODO popup
     }
     else {
-        compute()
+        history.innerText += ` ${string}`;
+        compute();
     };
 }
 
@@ -138,6 +143,12 @@ function enableOperatorButtons() {
 }
 
 function compute() {
+    for (let i = 0; i < operation.length; i++) {
+        if (operation[i].match(/\""/)) {
+            console.error("We found an empty string");
+            operation.splice(i, 1);
+        };
+    }
     console.table(operation);
     num1 = parseInt(operation[0]);
     operator = operation[1];
