@@ -1,23 +1,33 @@
 function add(num1, num2) {
     answer = num1 + num2;
     display.innerText = answer;
-    operation = [];
-    string = parseInt(answer);
+    displayString = parseInt(answer);
     answer = "";
 }
 
 function subtract(num1, num2) {
-    return console.log(num1 - num2);
+    answer = num1 - num2;
+    display.innerText = answer;
+    displayString = parseInt(answer);
+    answer = "";
 }
 
 function multiply(num1, num2) {
-    return console.log(num1 * num2);
+    answer = num1 * num2;
+    display.innerText = answer;
+    displayString = parseInt(answer);
+    answer = "";
 }
 
 function divide(num1, num2) {
     if (num2 == 0) {
         return console.error("ERROR, CANNOT DIVIDE BY ZERO");
-    } else return console.log(num1 / num2);
+    } else {
+        answer = num1 / num2;
+        display.innerText = answer;
+        displayString = parseInt(answer);
+        answer = "";
+    };
 }
 
 function operate(operator, num1, num2) {
@@ -40,74 +50,94 @@ const history = document.querySelector("#history");
 const display = document.querySelector("#display");
 const buttons = document.querySelectorAll("button");
 const operators = document.querySelectorAll(".operator")
-let string = "";
+let displayString = "";
+let historyString = "";
 let operation = [];
 let answer;
 
 for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener("click", (e) => {
         if (e.target.id.match(numregex)) {
-            string += e.target.id;
-            display.innerText = string;
-            enableOperatorButtons();
+            if (operation.length == 3) {
+                historyString = "";
+                history.innerText = historyString;
+                displayString = ""
+                display.innerText = displayString;
+                displayString += e.target.id;
+                display.innerText = displayString;
+                operation = [];
+            }
+            else {
+                displayString += e.target.id;
+                display.innerText = displayString;
+                enableOperatorButtons();
+            }
         }
         else {
-            operation.push(string);
-            specialCharacters(e);
+            if (displayString !== "") {
+                operation.push(displayString);
+                specialCharacters(e);
+            }
         };
 
     });
 }
 
 function specialCharacters(e) {
-
-    switch (e.target.id) {
-        case "decimal":
-            decimal();
-            break;
-        case "plusminus":
-            plusminus();
-            break;
-        case "plus":
-        case "minus":
-        case "times":
-        case "divide":
-        case "sqrt":
-        case "pow":
-        case "modulo":
-            operation.push(e.target.value);
-            commitOperators(e);
-            break;
-        case "equals":
-            equals();
-            break;
-        case "backspace":
-            backspace();
-            break;
-        case "clear":
-            clear();
-            break;
-        default:
-            console.error("Error within specialCharacters")
-            break;
+    if (operation.length == 3) {
+        history.innerText += ` ${displayString}`;
+        compute()
+    }
+    else {
+        switch (e.target.id) {
+            case "decimal":
+                decimal();
+                break;
+            case "plusminus":
+                plusminus();
+                break;
+            case "plus":
+            case "minus":
+            case "times":
+            case "divide":
+            case "sqrt":
+            case "pow":
+            case "modulo":
+                operation.push(e.target.value);
+                commitOperators(e);
+                break;
+            case "equals":
+                equals();
+                break;
+            case "backspace":
+                backspace();
+                break;
+            case "clear":
+                clear();
+                break;
+            default:
+                console.error("Error within specialCharacters")
+                break;
+        }
     }
 }
 
 function commitOperators(e) {
     if (e.target.value == "sqrt") {
-        string = `${e.target.value} (${string})`
+        historyString = `${e.target.value} (${displayString})`
         compute();
     }
     else if (e.target.value == "divide") {
         document.querySelector(".zero").setAttribute("disable", true);
         //TODO some popup
-        string += ` ${e.target.value} `;
+        displayString += ` ${e.target.value} `;
     }
     else {
-        string += ` ${e.target.value} `;
+        displayString += ` ${e.target.value} `;
     }
-    history.innerText = string;
-    display.innerText = "";
+    historyString = displayString;
+    history.innerText = historyString;
+    displayString = "";
     disableOperatorButtons();
 }
 
@@ -117,15 +147,16 @@ function equals() {
         // TODO popup
     }
     else {
-        history.innerText += ` ${string}`;
+        history.innerText += ` ${displayString}`;
         compute();
     };
 }
 
 function clear() {
-    string = "";
-    display.innerText = string;
-    history.innerText = string;
+    displayString = "";
+    historyString = "";
+    display.innerText = displayString;
+    history.innerText = historyString;
     operation = [];
     enableOperatorButtons();
 }
@@ -143,12 +174,6 @@ function enableOperatorButtons() {
 }
 
 function compute() {
-    for (let i = 0; i < operation.length; i++) {
-        if (operation[i].match(/\""/)) {
-            console.error("We found an empty string");
-            operation.splice(i, 1);
-        };
-    }
     console.table(operation);
     num1 = parseInt(operation[0]);
     operator = operation[1];
