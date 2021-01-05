@@ -21,7 +21,7 @@ function multiply(num1, num2) {
 
 function divide(num1, num2) {
     if (num2 == 0) {
-        return console.error("ERROR, CANNOT DIVIDE BY ZERO");
+        window.alert("ERROR, CANNOT DIVIDE BY ZERO")
     } else {
         answer = num1 / num2;
         display.innerText = answer;
@@ -30,19 +30,32 @@ function divide(num1, num2) {
     };
 }
 
+function squareRoot(num1) {
+    answer = Math.sqrt(num1);
+    display.innerText = answer;
+    displayString = parseInt(answer);
+    answer = "";
+}
+
+function exponent(num1, num2) {
+    answer = Math.pow(num1, num2);
+    display.innerText = answer;
+    displayString = parseInt(answer);
+    answer = "";
+}
+
 function operate(operator, num1, num2) {
     switch (true) {
         case (operator == "+"):
             return add(num1, num2);
-
         case (operator == "-"):
             return subtract(num1, num2);
-
         case (operator == "*"):
             return multiply(num1, num2);
-
         case (operator == "/"):
             return divide(num1, num2);
+        case (operator == "^"):
+            return exponent(num1, num2);
     }
 }
 numregex = /\d/
@@ -73,6 +86,13 @@ for (let i = 0; i < buttons.length; i++) {
                 enableOperatorButtons();
             }
         }
+        else if (e.target.id == "clear") {
+            clear();
+        }
+        else if (e.target.id == "backspace") {
+            backspace();
+        }
+
         else {
             if (displayString !== "") {
                 operation.push(displayString);
@@ -109,12 +129,6 @@ function specialCharacters(e) {
             case "equals":
                 equals();
                 break;
-            case "backspace":
-                backspace();
-                break;
-            case "clear":
-                clear();
-                break;
             default:
                 console.error("Error within specialCharacters")
                 break;
@@ -123,13 +137,13 @@ function specialCharacters(e) {
 }
 
 function commitOperators(e) {
-    if (e.target.value == "sqrt") {
-        historyString = `${e.target.value} (${displayString})`
-        compute();
+    if (e.target.id == "sqrt") {
+        history.innerText = `sqrt(${displayString})`;
+        disableOperatorButtons();
+        return compute();
     }
-    else if (e.target.value == "divide") {
-        document.querySelector(".zero").setAttribute("disable", true);
-        //TODO some popup
+    else if (e.target.id == "divide") {
+        disableZero()
         displayString += ` ${e.target.value} `;
     }
     else {
@@ -158,9 +172,25 @@ function clear() {
     display.innerText = displayString;
     history.innerText = historyString;
     operation = [];
+    enableZero();
     enableOperatorButtons();
 }
 
+function compute() {
+    console.table(operation);
+    num1 = parseInt(operation[0]);
+    operator = operation[1];
+    num2 = parseInt(operation[2]);
+    if (operator == "sqrt") {
+        squareRoot(num1);
+    }
+    else {
+        operate(operator, num1, num2);
+    }
+}
+
+
+//enable or disable buttons
 function disableOperatorButtons() {
     for (let i = 0; i < operators.length; i++) {
         operators[i].setAttribute("disabled", true);
@@ -173,10 +203,17 @@ function enableOperatorButtons() {
     }
 }
 
-function compute() {
-    console.table(operation);
-    num1 = parseInt(operation[0]);
-    operator = operation[1];
-    num2 = parseInt(operation[2]);
-    operate(operator, num1, num2);
+function disableZero() {
+    document.querySelector(".zero").setAttribute("disabled", true);
+}
+function enableZero() {
+    document.querySelector(".zero").removeAttribute("disabled");
+}
+
+function disableDecimal() {
+    document.querySelector("#decimal").setAttribute("disabled", true);
+}
+
+function enableDecimal() {
+    document.querySelector("#decimal").removeAttribute("disabled");
 }
