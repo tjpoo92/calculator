@@ -1,47 +1,66 @@
+const largeNumber = 100000000;
+
 function add(num1, num2) {
     answer = num1 + num2;
-    display.innerText = answer;
-    displayString = parseInt(answer);
-    answer = "";
+    rounding()
+    displayAnswer();
 }
 
 function subtract(num1, num2) {
     answer = num1 - num2;
-    display.innerText = answer;
-    displayString = parseInt(answer);
-    answer = "";
+    rounding()
+    displayAnswer();
 }
 
 function multiply(num1, num2) {
     answer = num1 * num2;
-    display.innerText = answer;
-    displayString = parseInt(answer);
-    answer = "";
+    rounding()
+    displayAnswer();
 }
 
 function divide(num1, num2) {
     if (num2 == 0) {
         window.alert("ERROR, CANNOT DIVIDE BY ZERO")
+        clear();
     } else {
         answer = num1 / num2;
-        display.innerText = answer;
-        displayString = parseInt(answer);
-        answer = "";
+        rounding();
+        displayAnswer();
     };
 }
 
 function squareRoot(num1) {
     answer = Math.sqrt(num1);
-    display.innerText = answer;
-    displayString = parseInt(answer);
-    answer = "";
+    rounding()
+    displayAnswer();
 }
 
 function exponent(num1, num2) {
     answer = Math.pow(num1, num2);
-    display.innerText = answer;
-    displayString = parseInt(answer);
-    answer = "";
+    rounding()
+    displayAnswer();
+}
+
+function modulo(num1, num2) {
+    answer = num1 % num2;
+    rounding()
+    displayAnswer();
+}
+
+function rounding() {
+    answer = (Math.round(answer * largeNumber) / largeNumber);
+}
+
+function displayAnswer() {
+    if ((window.innerWidth < "576") && (answer.toString().length > 20)) {
+        clear();
+        display.innerText = "OVERFLOW ERROR";
+    }
+    else {
+        display.innerText = answer;
+        displayString = parseFloat(answer);
+        answer = "";
+    }
 }
 
 function operate(operator, num1, num2) {
@@ -56,9 +75,11 @@ function operate(operator, num1, num2) {
             return divide(num1, num2);
         case (operator == "^"):
             return exponent(num1, num2);
+        case (operator == "%"):
+            return modulo(num1, num2);
     }
 }
-numregex = /\d/
+numregex = /\d|[.]/
 const history = document.querySelector("#history");
 const display = document.querySelector("#display");
 const buttons = document.querySelectorAll("button");
@@ -70,20 +91,17 @@ let answer;
 
 for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener("click", (e) => {
-        if (e.target.id.match(numregex)) {
+        if (e.target.value.match(numregex)) {
             if (operation.length == 3) {
-                historyString = "";
-                history.innerText = historyString;
-                displayString = ""
-                display.innerText = displayString;
+                clear();
                 displayString += e.target.id;
                 display.innerText = displayString;
-                operation = [];
             }
             else {
-                displayString += e.target.id;
+                displayString += e.target.value;
                 display.innerText = displayString;
                 enableOperatorButtons();
+                enableZero();
             }
         }
         else if (e.target.id == "clear") {
@@ -92,7 +110,6 @@ for (let i = 0; i < buttons.length; i++) {
         else if (e.target.id == "backspace") {
             backspace();
         }
-
         else {
             if (displayString !== "") {
                 operation.push(displayString);
@@ -105,14 +122,13 @@ for (let i = 0; i < buttons.length; i++) {
 
 function specialCharacters(e) {
     if (operation.length == 3) {
-        history.innerText += ` ${displayString}`;
-        compute()
+        equals();
     }
+    // else if (operation.length > 3){
+
+    // }
     else {
         switch (e.target.id) {
-            case "decimal":
-                decimal();
-                break;
             case "plusminus":
                 plusminus();
                 break;
@@ -124,6 +140,7 @@ function specialCharacters(e) {
             case "pow":
             case "modulo":
                 operation.push(e.target.value);
+                enableDecimal();
                 commitOperators(e);
                 break;
             case "equals":
@@ -158,7 +175,6 @@ function commitOperators(e) {
 function equals() {
     if (!(operation[operation.length - 1].match(numregex))) {
         display.innerText = "Please complete your operation";
-        // TODO popup
     }
     else {
         history.innerText += ` ${displayString}`;
@@ -166,21 +182,46 @@ function equals() {
     };
 }
 
+
 function clear() {
     displayString = "";
     historyString = "";
     display.innerText = displayString;
     history.innerText = historyString;
     operation = [];
+    enableDecimal();
     enableZero();
     enableOperatorButtons();
 }
 
+function backspace() {
+    let tempString = "";
+    if ((historyString !== "") && (operation.length !== 3)) {
+        history.innerText = ""
+        historyString = "";
+        displayString = "";
+        operation.pop();
+        for (let i = 0; i < operation.length; i++) {
+            tempString = operation[i];
+            displayString += tempString;
+
+        }
+        display.innerText = displayString;
+        operation = [];
+        enableOperatorButtons();
+        enableDecimal();
+        enableZero();
+    }
+    else {
+        clear();
+    }
+}
+
 function compute() {
     console.table(operation);
-    num1 = parseInt(operation[0]);
+    num1 = parseFloat(operation[0]);
     operator = operation[1];
-    num2 = parseInt(operation[2]);
+    num2 = parseFloat(operation[2]);
     if (operator == "sqrt") {
         squareRoot(num1);
     }
@@ -188,7 +229,6 @@ function compute() {
         operate(operator, num1, num2);
     }
 }
-
 
 //enable or disable buttons
 function disableOperatorButtons() {

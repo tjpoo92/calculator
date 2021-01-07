@@ -21,6 +21,11 @@
     <link rel="stylesheet" href="reset.css" />
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="#" />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+      crossorigin="anonymous"
+    ></script>
   </head>
 
   <body>
@@ -40,13 +45,15 @@
         <button class="btn btn-secondary col-2" id="backspace">
           <i class="fas fa-backspace"></i>
         </button>
-        <button class="btn btn-danger col-2" id="clear">CE</button>
+        <button class="btn btn-danger col-2" id="clear" value="clear">
+          CE
+        </button>
       </div>
 
       <div class="row">
-        <button class="col btn btn-secondary" id="7">7</button>
-        <button class="col btn btn-secondary" id="8">8</button>
-        <button class="col btn btn-secondary" id="9">9</button>
+        <button class="col btn btn-secondary" id="7" value="7">7</button>
+        <button class="col btn btn-secondary" id="8" value="8">8</button>
+        <button class="col btn btn-secondary" id="9" value="9">9</button>
         <button class="col-2 btn btn-dark operator" id="divide" value="/">
           <i class="fas fa-divide"></i>
         </button>
@@ -56,9 +63,9 @@
       </div>
 
       <div class="row">
-        <button class="col btn btn-secondary" id="4">4</button>
-        <button class="col btn btn-secondary" id="5">5</button>
-        <button class="col btn btn-secondary" id="6">6</button>
+        <button class="col btn btn-secondary" id="4" value="4">4</button>
+        <button class="col btn btn-secondary" id="5" value="5">5</button>
+        <button class="col btn btn-secondary" id="6" value="6">6</button>
         <button class="col-2 btn btn-dark operator" id="times" value="*">
           <i class="fas fa-times"></i>
         </button>
@@ -68,9 +75,9 @@
       </div>
 
       <div class="row">
-        <button class="col btn btn-secondary" id="1">1</button>
-        <button class="col btn btn-secondary" id="2">2</button>
-        <button class="col btn btn-secondary" id="3">3</button>
+        <button class="col btn btn-secondary" id="1" value="1">1</button>
+        <button class="col btn btn-secondary" id="2" value="2">2</button>
+        <button class="col btn btn-secondary" id="3" value="3">3</button>
         <button class="col-2 btn btn-dark operator" id="minus" value="-">
           <i class="fas fa-minus"></i>
         </button>
@@ -80,23 +87,18 @@
       </div>
 
       <div class="row">
-        <button class="col btn btn-secondary" id="decimal">.</button>
-        <button class="col btn btn-secondary zero" id="0">0</button>
+        <button class="col btn btn-secondary" id="decimal" value=".">.</button>
+        <button class="col btn btn-secondary zero" id="0" value="0">0</button>
         <button class="col btn btn-secondary" id="plusminus">+/-</button>
         <button class="col-2 btn btn-dark operator" id="plus" value="+">
           <i class="fas fa-plus"></i>
         </button>
-        <button class="col-2 btn btn-success" id="equals">
+        <button class="col-2 btn btn-success" id="equals" value="=">
           <i class="fas fa-equals"></i>
         </button>
       </div>
     </div>
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
-      crossorigin="anonymous"
-    ></script>
     <footer class="fixed-bottom text-center">
       This project was completed as part of
       <a href="https://www.theodinproject.com/" target="_blank"
