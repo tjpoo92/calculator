@@ -1,9 +1,12 @@
 const largeNumber = 100000000;
+let tempNum;
+let computeRan = false;
 
 function add(num1, num2) {
     answer = num1 + num2;
     rounding()
     displayAnswer();
+
 }
 
 function subtract(num1, num2) {
@@ -59,7 +62,6 @@ function displayAnswer() {
     else {
         display.innerText = answer;
         displayString = parseFloat(answer);
-        answer = "";
     }
 }
 
@@ -87,7 +89,7 @@ const operators = document.querySelectorAll(".operator")
 let displayString = "";
 let historyString = "";
 let operation = [];
-let answer;
+let answer = 0;
 
 for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener("click", (e) => {
@@ -110,48 +112,57 @@ for (let i = 0; i < buttons.length; i++) {
         else if (e.target.id == "backspace") {
             backspace();
         }
+        else if (e.target.id == "equals") {
+            operation.push(displayString);
+            equals();
+        }
         else {
-            if (displayString !== "") {
+            if ((computeRan == true) && (operation.length !== 3)) {
+                operation.push(displayString);
+                history.innerText += ` ${displayString}`;
+                display.innerText = "";
+                specialCharacters(e);
+                // equals();
+
+            }
+            else if ((displayString !== "") && (operation.length !== 3)) {
+                operation.push(displayString);
+                computeRan = true;
+                specialCharacters(e);
+            }
+            else {
+                operation = [];
                 operation.push(displayString);
                 specialCharacters(e);
             }
         };
-
     });
 }
 
-function specialCharacters(e) {
-    if (operation.length == 3) {
-        equals();
-    }
-    // else if (operation.length > 3){
 
-    // }
-    else {
-        switch (e.target.id) {
-            case "plusminus":
-                plusminus();
-                break;
-            case "plus":
-            case "minus":
-            case "times":
-            case "divide":
-            case "sqrt":
-            case "pow":
-            case "modulo":
-                operation.push(e.target.value);
-                enableDecimal();
-                commitOperators(e);
-                break;
-            case "equals":
-                equals();
-                break;
-            default:
-                console.error("Error within specialCharacters")
-                break;
-        }
+function specialCharacters(e) {
+
+    switch (e.target.id) {
+        case "plusminus":
+            plusminus();
+            break;
+        case "plus":
+        case "minus":
+        case "times":
+        case "divide":
+        case "sqrt":
+        case "pow":
+        case "modulo":
+            operation.push(e.target.value);
+            enableDecimal();
+            commitOperators(e);
+            break;
+        default:
+            console.error("Error within specialCharacters")
+            break;
     }
 }
+
 
 function commitOperators(e) {
     if (e.target.id == "sqrt") {
@@ -168,7 +179,7 @@ function commitOperators(e) {
     }
     historyString = displayString;
     history.innerText = historyString;
-    displayString = "";
+    // displayString = "";
     disableOperatorButtons();
 }
 
@@ -186,6 +197,7 @@ function equals() {
 function clear() {
     displayString = "";
     historyString = "";
+    computeRan = false;
     display.innerText = displayString;
     history.innerText = historyString;
     operation = [];
