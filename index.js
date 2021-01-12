@@ -62,6 +62,7 @@ function displayAnswer() {
     else {
         display.innerText = answer;
         displayString = parseFloat(answer);
+
     }
 }
 
@@ -114,23 +115,24 @@ for (let i = 0; i < buttons.length; i++) {
         }
         else if (e.target.id == "equals") {
             operation.push(displayString);
+            // computeRan = true;
             equals();
         }
         else {
             if ((computeRan == true) && (operation.length !== 3)) {
                 operation.push(displayString);
                 history.innerText += ` ${displayString}`;
-                display.innerText = "";
+                compute();
                 specialCharacters(e);
-                // equals();
-
+                display.innerText = "";
+                console.table(operation);
             }
             else if ((displayString !== "") && (operation.length !== 3)) {
                 operation.push(displayString);
                 computeRan = true;
                 specialCharacters(e);
             }
-            else {
+            else if (operation.length == 3) {
                 operation = [];
                 operation.push(displayString);
                 specialCharacters(e);
@@ -141,7 +143,10 @@ for (let i = 0; i < buttons.length; i++) {
 
 
 function specialCharacters(e) {
+    if (operation.length == 3) {
+        operation.splice(0, 3, answer);
 
+    }
     switch (e.target.id) {
         case "plusminus":
             plusminus();
@@ -179,7 +184,8 @@ function commitOperators(e) {
     }
     historyString = displayString;
     history.innerText = historyString;
-    // displayString = "";
+    displayString = "";
+    display.innerText = displayString;
     disableOperatorButtons();
 }
 
@@ -208,7 +214,11 @@ function clear() {
 
 function backspace() {
     let tempString = "";
-    if ((historyString !== "") && (operation.length !== 3)) {
+    if (displayString !== "") {
+        displayString = "";
+        display.innerText = displayString;
+    }
+    else if (historyString !== "") {
         history.innerText = ""
         historyString = "";
         displayString = "";
@@ -230,6 +240,7 @@ function backspace() {
 }
 
 function compute() {
+    // computeRan = false;
     console.table(operation);
     num1 = parseFloat(operation[0]);
     operator = operation[1];
@@ -240,6 +251,7 @@ function compute() {
     else {
         operate(operator, num1, num2);
     }
+
 }
 
 //enable or disable buttons
