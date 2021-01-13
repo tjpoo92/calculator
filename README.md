@@ -50,7 +50,7 @@ My biggest struggle this project was getting all the calculator logic operating 
 As mentioned above many times I'd get a function working correctly, only to find out I broke another piece of my code elsewhere. This lead me to take a good look at my script and ensure every piece typed is required and how everything interacted. Once I sat down and did that things came together easier but I still had to work through the issues and test through every function even if I thought it was complete before.
 Which leads me a bit to staying in project scope. I had looked at previous Calculator projects and had seen a few things that I also thought would be cool to implement. Unfortunately, this led me to doing more than what was asked and probably greatly extending the time this should have taken me. I'm proud of the extra items I implemented, however they're weren't actually required.
 
-####Items I'd like to improve on for future projects:
+  #### Items I'd like to improve on for future projects:
 
 - Improve ability with JS Arrays.
   - I feel like the lessons leading to this project were a little lost on me for a long time
