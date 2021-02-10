@@ -4,7 +4,7 @@
 
 ## Objective
 
-This project was to create a working calculator.
+The goal of this project was to create a working calculator.
 
 The main goals were to:
 
